@@ -4651,9 +4651,9 @@ function BeeSwarmSimulator(DATA){
             svg:document.getElementById('inspire'),
             cooldown:document.getElementById('inspire_cooldown'),
             amount:document.getElementById('inspire_amount'),
-            maxCooldown:5,
+            maxCooldown:30,
             maxAmount:50,
-            tokenLife:4,
+            tokenLife:15,
             
             update:(amount,player)=>{
                 
@@ -4664,7 +4664,7 @@ function BeeSwarmSimulator(DATA){
             
             getMessage:(amount)=>{
                 
-                return 'Inspire\nx'+(amount*0.25+1).toFixed(2)+' pollen'
+                return 'Inspire\nx'+(amount*1+1).toFixed(2)+' pollen'
             }
         },
         
@@ -28484,6 +28484,14 @@ function BeeSwarmSimulator(DATA){
                 displayPos:[48,14,55.075],
                 displayRot:[0,90,0],
                 displayScale:[1.2,1.2,1.2],
+             },{
+
+                name:'SupremeVortex',
+                slot:'sprinkler',
+                viewMatrix:[48+4,14+1.5,55.075,-MATH.HALF_PI,-0.3],
+                displayPos:[48,14,55.075],
+                displayRot:[0,90,1],
+                displayScale:[1.2,1.2,1.20],
             }],
             currentIndex:0,message:'Explore Sprinkler Shop'
         },
@@ -34760,4 +34768,5 @@ function BeeSwarmSimulator(DATA){
     
 
 }
+
 
