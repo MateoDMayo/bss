@@ -526,7 +526,7 @@ function BeeSwarmSimulator(DATA){
         {item:'fieldDice',req:[['softWax',1],['whirligig',1],['redExtract',1],['blueExtract',1]]},
         {item:'smoothDice',req:[['fieldDice',2],['whirligig',2],['softWax',2],['oil',2]]},
         {item:'loadedDice',req:[['smoothDice',2],['hardWax',1],['oil',2],['glue',1]]},
-        {item:'softWax',req:[['honeysuckle',3],['oil',1],['enzymes',1],['royalJelly',5]]},
+        {item:'softWax',req:[['oil',1],['enzymes',1],['royalJelly',5]]},
         {item:'hardWax',req:[['softWax',2],['enzymes',1],['bitterberry',3],['royalJelly',5]]},
         {item:'swirledWax',req:[['hardWax',1],['softWax',2],['purplePotion',1],['royalJelly',15]]},
         {item:'causticWax',req:[['hardWax',2],['neonberry',5],['gumdrops',10],['royalJelly',25]]},
@@ -34760,3 +34760,4 @@ function BeeSwarmSimulator(DATA){
     
 
 }
+
