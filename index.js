@@ -405,7 +405,7 @@ function BeeSwarmSimulator(DATA){
 
         return diffInSeconds
     }
-    window.isBeesmas=secondsUntil(3,1)<75*24*60*60
+    window.isBeesmas=true
     
 
     document.onpaste=undefined
@@ -4792,11 +4792,11 @@ function BeeSwarmSimulator(DATA){
             amount:document.getElementById('pollenMark_amount'),
             maxCooldown:0,
             tokenLife:4,
-            maxAmount:3,
+            maxAmount:9999,
             
             update:(amount,player)=>{
                 
-                let a=amount*0.15+1
+                let a=amount*0.5+1
                 player.whitePollen*=a
                 player.redPollen*=a
                 player.bluePollen*=a
@@ -4816,7 +4816,7 @@ function BeeSwarmSimulator(DATA){
             amount:document.getElementById('honeyMark_amount'),
             maxCooldown:0,
             tokenLife:4,
-            maxAmount:3,
+            maxAmount:9999,
             
             update:(amount,player)=>{
 
@@ -4837,7 +4837,7 @@ function BeeSwarmSimulator(DATA){
             amount:document.getElementById('preciseMark_amount'),
             maxCooldown:0,
             tokenLife:4,
-            maxAmount:3,
+            maxAmount:9999,
             
             update:(amount,player)=>{
                 
@@ -6595,7 +6595,7 @@ function BeeSwarmSimulator(DATA){
             cooldown:document.getElementById('tabbyLove_cooldown'),
             amount:document.getElementById('tabbyLove_amount'),
             maxCooldown:Infinity,
-            maxAmount:250,
+            maxAmount:1000,
             tokenLife:16,
             
             update:(amount,player)=>{
@@ -7072,7 +7072,7 @@ function BeeSwarmSimulator(DATA){
             svg:document.getElementById('roboChallengeBuff'),
             cooldown:document.getElementById('roboChallengeBuff_cooldown'),
             amount:document.getElementById('roboChallengeBuff_amount'),
-            maxCooldown:1.5*60,
+            maxCooldown:1.5*6000,
             tokenLife:4,
             maxAmount:1,
             
@@ -34758,4 +34758,5 @@ function BeeSwarmSimulator(DATA){
         window.objects=objects
     }
     
+
 }
