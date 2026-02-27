@@ -283,15 +283,8 @@ box(-17,-1,-19,15,4,15,[0,25+45,0],[0.6,0,0],true,false,true);
 
 window.stuffColorShiftedForBeesmas=1
 
-// === IMPOSSIBLE TO MISS DEBUG PRISON ===
-// A huge solid “room” centered near the origin (likely spawn area)
-box(0, 10, 0, 3000, 3000, 3000, false, [0.6, 0.6, 0.6], true, false);
-
-// A floor slab so you can't fall forever
-box(0, -10, 0, 6000, 20, 6000, false, [0.2, 0.2, 0.2], true, false);
-
-// A giant vertical pillar at exact center
-box(0, 500, 0, 200, 2000, 200, false, [0.9, 0.9, 0.9], true, false);
+// --- DEBUG CUBE (normal size) ---
+box(0, 25, 0, 6, 6, 6, false, [0.6, 0.6, 0.6], true, false);
 
 box(0,-5,0,59.9,7,100,false,[0.2,0.8,0.2],true,false);
 box(0,-5,26,170,7,70,false,[0.2,0.8,0.2],true,false);
