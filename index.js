@@ -294,79 +294,7 @@ function main(){
 
 var _M=Math
 
-function BeeSwarmSimulator(DATA){
-
-    let Math=_M,width=window.thisProgramIsInFullScreen?500:window.innerWidth+1,height=window.thisProgramIsInFullScreen?500:window.innerHeight+1,half_width=width*0.5,half_height=height*0.5,aspect=width/height,FETCHED_CODE={},beeCanvas,UPDATE_FLOWER_MESH=true,GIFTED_BEE_TEXTURE_OFFSET=768/2048
-
-    //eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-    window.isMobile=navigator.maxTouchPoints>0
-
-    let joystickMovement=[0,0],jumpingButton,jumpingOnce,touchPress
-
-    function initMobileControls(){
-        
-        if(!window.isMobile){
-            jumpButton.style.display='none'
-            joystickContainer.style.display='none'
-            return
-        }
-
-        jumpButton.addEventListener('touchstart',(e)=>{
-            jumpingButton=1
-            jumpingOnce=TIME
-            
-            e.preventDefault()
-        })
-        jumpButton.addEventListener('touchend',()=>jumpingButton=0)
-
-        joystickContainer.style.display='block'
-        jumpButton.style.display='block'
-
-        let rad=Math.min(width,height)*0.33
-        joystickContainer.style.right=(width-rad)+'px'
-        joystickContainer.style.top=(height-rad)+'px'
-        
-        jumpButton.style.left=(width-rad)+'px'
-        jumpButton.style.top=(height-rad)+'px'
-
-        let bb=joystickContainer.getBoundingClientRect(),
-            midX=bb.width*0.5,midY=bb.height*0.5
-        
-        rad=joystickOutline.getBoundingClientRect().width*0.5
-        let radrad=rad*rad,invrad=1/rad
-        
-        let onTouchOrMove=(e)=>{
-                
-            let touch=e.targetTouches[0]
-            
-            let x=touch.clientX-bb.x,y=touch.clientY-bb.y
-            
-            x-=midX
-            y-=midY
-            
-            let m=x*x+y*y
-            
-            if(m>radrad&&m){
-                m=rad/Math.sqrt(m)
-                x*=m
-                y*=m
-            }
-            
-            joystickMovement[0]=x*invrad
-            joystickMovement[1]=y*invrad
-            
-            x+=midX
-            y+=midY
-            
-            joystick.style.left=x+'px'
-            joystick.style.top=y+'px'
-            
-            e.preventDefault()
-        }
-        
-        joystickContainer.addEventListener('touchstart',onTouchOrMove)
-        joystickContainer.addEventListener('touchmove',onTouchOrMove)
-        
+ 
         joystickContainer.addEventListener('touchend',(e)=>{
             
             joystick.style.left='50%'
@@ -497,8 +425,14 @@ function BeeSwarmSimulator(DATA){
     }
     window.onresize=windowResize
 
-    let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_COLLECT=0,BEE_FLY=0,then=0,dt,frameCount=0,TIME=0,player,NIGHT_DARKNESS=0.55,NPCs,STATS_TICK=false,leavesTimer=45,snowflakeTimer=2,testRealm=DATA.name===window.atob('VGVzdFJlYWxt'),minNPC
-    
+    let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_COLLECT=0,BEE_FLY=0,then=0,dt,frameCount=0,TIME=0,player,NIGHT_DARKNESS=0.55,NPCs,STATS_TICK=false,leavesTimer=45,snowflakeTimer=2,testRealm=DATA.name===window.atob('VGVzdFJlYWxt'),minNPC;
+    // === ENDGAME STATE ===
+    let ENDGAME = {
+    triggered: false,
+    checking: true
+    };
+
+const ENDGAME_HONEY = 10_000_000_000_000; // 10T
     let CURRENTLY_SNOW_STORM=0,CURRENTLY_HONEY_STORM=0,CURRENTLY_MYTHIC_STORM=0,STORM_SKY_COLOR,GLOBAL_SKY_COLOR=isBeesmas?[0.96,0.96,0.96]:[0.4,0.6,1]
 
     gl.enable(gl.BLEND)
@@ -33735,6 +33669,12 @@ function BeeSwarmSimulator(DATA){
         
         player.extraInfo=save.extraInfo
         player.honey=save.honey
+        // === ENDGAME CHECK (ON LOAD) ===
+    if (player.honey >= ENDGAME_HONEY && !ENDGAME.triggered) {
+    ENDGAME.triggered = true;
+    ENDGAME.checking = false;
+    console.log("END OF NORMALITY REACHED (on load)", player.honey);
+}
         player.pollen=save.pollen
         player.currentGear=save.currentGear
         for(let i in player.currentGear)if(i.indexOf('Snail')>-1){player.currentGear[i.replaceAll('Snail','Shell')]=player.currentGear[i].slice();delete player.currentGear[i]}
@@ -34768,5 +34708,6 @@ function BeeSwarmSimulator(DATA){
     
 
 }
+
 
 
