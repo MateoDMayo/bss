@@ -1132,17 +1132,17 @@ box(-33,5.5,10,5,3,4,[0,-30,0],[0,0.5,0],false,true);
 
 function dandelion(x,y,z,s){
 
-s*=200
+s*=0.75
 cylinder(x,y,z,0.225*s,10,7,0,0.45,0,1,90,0,0,0.225*s);
 sphere(x,y+5,z,3*s,1,0.9,0.9,0.9,1);
 
 }
 
-dandelion(1,2,8,1)
-dandelion(-3,-5,19,0.4)
-dandelion(-9,-4,7,0.5)
-dandelion(-12,-1,8,0.9)
-dandelion(-15,1,10,1.1)
+dandelion(10,20,80,10)
+dandelion(-30,-50,190,0.40)
+dandelion(-90,-40,70,0.50)
+dandelion(-120,-10,8,0.9)
+dandelion(-150,10,100,1.10)
 
 
 box(-32,5,6.25,20,13,0.5,false,[0.1,0.4,0.1],true,false);
