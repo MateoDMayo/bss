@@ -4794,6 +4794,31 @@
 <script src='thumbnail.js'></script>
 <script src='index.js'></script>
 
+<script>
+(function () {
+  const HONEY_REQUIRED = 10_000_000_000_000; // 10T
+  const CHECK_INTERVAL = 2 * 60 * 60 * 1000; // 2 hours
+  let triggered = false;
+
+  function getHoney() {
+    return window.playerHoney ?? window.honey ?? window.saveData?.honey ?? 0;
+  }
+
+  function check() {
+    if (triggered) return;
+
+    const honey = getHoney();
+    if (honey >= HONEY_REQUIRED) {
+      triggered = true;
+      console.log("ENDGAME TRIGGERED:", honey);
+    }
+  }
+
+  setTimeout(check, 3000);
+  setInterval(check, CHECK_INTERVAL);
+})();
+</script>
 
 </body>
 </html>
+
