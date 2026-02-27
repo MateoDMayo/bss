@@ -33669,6 +33669,7 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
         
         player.extraInfo=save.extraInfo
         player.honey=save.honey
+        console.log("SAVE LOADED, honey =", player.honey, "ENDGAME exists?", typeof ENDGAME);
         // === ENDGAME CHECK (ON LOAD) ===
     if (player.honey >= ENDGAME_HONEY && !ENDGAME.triggered) {
     ENDGAME.triggered = true;
@@ -34708,6 +34709,7 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
     
 
 }
+
 
 
 
