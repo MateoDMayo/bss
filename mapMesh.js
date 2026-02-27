@@ -283,6 +283,9 @@ box(-17,-1,-19,15,4,15,[0,25+45,0],[0.6,0,0],true,false,true);
 
 window.stuffColorShiftedForBeesmas=1
 
+// --- DEBUG CUBE (normal size) ---
+box(0, 25, 0, 6, 6, 6, false, [0.6, 0.6, 0.6], true, false);
+
 box(0,-5,0,59.9,7,100,false,[0.2,0.8,0.2],true,false);
 box(0,-5,26,170,7,70,false,[0.2,0.8,0.2],true,false);
 
