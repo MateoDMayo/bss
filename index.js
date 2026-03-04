@@ -4586,8 +4586,8 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
             cooldown:document.getElementById('inspire_cooldown'),
             amount:document.getElementById('inspire_amount'),
             maxCooldown:30,
-            maxAmount:50,
-            tokenLife:15,
+            maxAmount:500,
+            tokenLife:30,
             
             update:(amount,player)=>{
                 
@@ -4598,7 +4598,7 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
             
             getMessage:(amount)=>{
                 
-                return 'Inspire\nx'+(amount*1+1).toFixed(2)+' pollen'
+                return 'Inspire\nx'+(amount*1+1).toFixed(4)+' pollen'
             }
         },
         
@@ -34709,6 +34709,7 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
     
 
 }
+
 
 
 
