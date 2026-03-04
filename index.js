@@ -294,7 +294,79 @@ function main(){
 
 var _M=Math
 
- 
+function BeeSwarmSimulator(DATA){
+
+    let Math=_M,width=window.thisProgramIsInFullScreen?500:window.innerWidth+1,height=window.thisProgramIsInFullScreen?500:window.innerHeight+1,half_width=width*0.5,half_height=height*0.5,aspect=width/height,FETCHED_CODE={},beeCanvas,UPDATE_FLOWER_MESH=true,GIFTED_BEE_TEXTURE_OFFSET=768/2048
+
+    //eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    window.isMobile=navigator.maxTouchPoints>0
+
+    let joystickMovement=[0,0],jumpingButton,jumpingOnce,touchPress
+
+    function initMobileControls(){
+        
+        if(!window.isMobile){
+            jumpButton.style.display='none'
+            joystickContainer.style.display='none'
+            return
+        }
+
+        jumpButton.addEventListener('touchstart',(e)=>{
+            jumpingButton=1
+            jumpingOnce=TIME
+            
+            e.preventDefault()
+        })
+        jumpButton.addEventListener('touchend',()=>jumpingButton=0)
+
+        joystickContainer.style.display='block'
+        jumpButton.style.display='block'
+
+        let rad=Math.min(width,height)*0.33
+        joystickContainer.style.right=(width-rad)+'px'
+        joystickContainer.style.top=(height-rad)+'px'
+        
+        jumpButton.style.left=(width-rad)+'px'
+        jumpButton.style.top=(height-rad)+'px'
+
+        let bb=joystickContainer.getBoundingClientRect(),
+            midX=bb.width*0.5,midY=bb.height*0.5
+        
+        rad=joystickOutline.getBoundingClientRect().width*0.5
+        let radrad=rad*rad,invrad=1/rad
+        
+        let onTouchOrMove=(e)=>{
+                
+            let touch=e.targetTouches[0]
+            
+            let x=touch.clientX-bb.x,y=touch.clientY-bb.y
+            
+            x-=midX
+            y-=midY
+            
+            let m=x*x+y*y
+            
+            if(m>radrad&&m){
+                m=rad/Math.sqrt(m)
+                x*=m
+                y*=m
+            }
+            
+            joystickMovement[0]=x*invrad
+            joystickMovement[1]=y*invrad
+            
+            x+=midX
+            y+=midY
+            
+            joystick.style.left=x+'px'
+            joystick.style.top=y+'px'
+            
+            e.preventDefault()
+        }
+        
+        joystickContainer.addEventListener('touchstart',onTouchOrMove)
+        joystickContainer.addEventListener('touchmove',onTouchOrMove)
+        
         joystickContainer.addEventListener('touchend',(e)=>{
             
             joystick.style.left='50%'
@@ -333,7 +405,7 @@ var _M=Math
 
         return diffInSeconds
     }
-    window.isBeesmas=true
+    window.isBeesmas=secondsUntil(3,1)<75*24*60*60
     
 
     document.onpaste=undefined
@@ -425,14 +497,8 @@ var _M=Math
     }
     window.onresize=windowResize
 
-    let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_COLLECT=0,BEE_FLY=0,then=0,dt,frameCount=0,TIME=0,player,NIGHT_DARKNESS=0.55,NPCs,STATS_TICK=false,leavesTimer=45,snowflakeTimer=2,testRealm=DATA.name===window.atob('VGVzdFJlYWxt'),minNPC;
-    // === ENDGAME STATE ===
-    let ENDGAME = {
-    triggered: false,
-    checking: true
-    };
-
-const ENDGAME_HONEY = 10_000_000_000_000; // 10T
+    let PLAYER_PHYSICS_GROUP=2,STATIC_PHYSICS_GROUP=4,DYNAMIC_PHYSICS_GROUP=8,BEE_COLLECT=0,BEE_FLY=0,then=0,dt,frameCount=0,TIME=0,player,NIGHT_DARKNESS=0.55,NPCs,STATS_TICK=false,leavesTimer=45,snowflakeTimer=2,testRealm=DATA.name===window.atob('VGVzdFJlYWxt'),minNPC
+    
     let CURRENTLY_SNOW_STORM=0,CURRENTLY_HONEY_STORM=0,CURRENTLY_MYTHIC_STORM=0,STORM_SKY_COLOR,GLOBAL_SKY_COLOR=isBeesmas?[0.96,0.96,0.96]:[0.4,0.6,1]
 
     gl.enable(gl.BLEND)
@@ -460,7 +526,7 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
         {item:'fieldDice',req:[['softWax',1],['whirligig',1],['redExtract',1],['blueExtract',1]]},
         {item:'smoothDice',req:[['fieldDice',2],['whirligig',2],['softWax',2],['oil',2]]},
         {item:'loadedDice',req:[['smoothDice',2],['hardWax',1],['oil',2],['glue',1]]},
-        {item:'softWax',req:[['oil',1],['enzymes',1],['royalJelly',5]]},
+        {item:'softWax',req:[['honeysuckle',3],['oil',1],['enzymes',1],['royalJelly',5]]},
         {item:'hardWax',req:[['softWax',2],['enzymes',1],['bitterberry',3],['royalJelly',5]]},
         {item:'swirledWax',req:[['hardWax',1],['softWax',2],['purplePotion',1],['royalJelly',15]]},
         {item:'causticWax',req:[['hardWax',2],['neonberry',5],['gumdrops',10],['royalJelly',25]]},
@@ -4585,20 +4651,20 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
             svg:document.getElementById('inspire'),
             cooldown:document.getElementById('inspire_cooldown'),
             amount:document.getElementById('inspire_amount'),
-            maxCooldown:30,
-            maxAmount:500,
-            tokenLife:30,
+            maxCooldown:5,
+            maxAmount:50,
+            tokenLife:4,
             
             update:(amount,player)=>{
                 
-                player.redPollen*=amount*1+1
-                player.whitePollen*=amount*1+1
-                player.bluePollen*=amount*1+1
+                player.redPollen*=amount*0.25+1
+                player.whitePollen*=amount*0.25+1
+                player.bluePollen*=amount*0.25+1
             },
             
             getMessage:(amount)=>{
                 
-                return 'Inspire\nx'+(amount*1+1).toFixed(4)+' pollen'
+                return 'Inspire\nx'+(amount*0.25+1).toFixed(2)+' pollen'
             }
         },
         
@@ -4726,11 +4792,11 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
             amount:document.getElementById('pollenMark_amount'),
             maxCooldown:0,
             tokenLife:4,
-            maxAmount:9999,
+            maxAmount:3,
             
             update:(amount,player)=>{
                 
-                let a=amount*0.5+1
+                let a=amount*0.15+1
                 player.whitePollen*=a
                 player.redPollen*=a
                 player.bluePollen*=a
@@ -4750,7 +4816,7 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
             amount:document.getElementById('honeyMark_amount'),
             maxCooldown:0,
             tokenLife:4,
-            maxAmount:9999,
+            maxAmount:3,
             
             update:(amount,player)=>{
 
@@ -4771,7 +4837,7 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
             amount:document.getElementById('preciseMark_amount'),
             maxCooldown:0,
             tokenLife:4,
-            maxAmount:9999,
+            maxAmount:3,
             
             update:(amount,player)=>{
                 
@@ -6529,7 +6595,7 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
             cooldown:document.getElementById('tabbyLove_cooldown'),
             amount:document.getElementById('tabbyLove_amount'),
             maxCooldown:Infinity,
-            maxAmount:1000,
+            maxAmount:250,
             tokenLife:16,
             
             update:(amount,player)=>{
@@ -7006,7 +7072,7 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
             svg:document.getElementById('roboChallengeBuff'),
             cooldown:document.getElementById('roboChallengeBuff_cooldown'),
             amount:document.getElementById('roboChallengeBuff_amount'),
-            maxCooldown:1.5*6000,
+            maxCooldown:1.5*60,
             tokenLife:4,
             maxAmount:1,
             
@@ -10284,13 +10350,13 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
         
         computeLevel(newLevel){
             
-            this.gatheringTokens=[{type:'inspire',cooldown:effects.inspire.trialCooldown,rate:effects.inspire.trialRate,timer:-1000,requireGifted:true}]
+            this.gatheringTokens=[{type:'inspire',cooldown:effects.inspire.trialCooldown,rate:effects.inspire.trialRate,timer:-10000,requireGifted:true}]
             
             for(let i in beeInfo[this.type].tokens){
                 
                 let t=beeInfo[this.type].tokens[i].replace('*',''),g=beeInfo[this.type].tokens[i].indexOf('*')>-1
                 
-                this.gatheringTokens.push({type:t,cooldown:effects[t].trialCooldown,rate:effects[t].trialRate,timer:-1000,requireGifted:g})
+                this.gatheringTokens.push({type:t,cooldown:effects[t].trialCooldown,rate:effects[t].trialRate,timer:-10000,requireGifted:g})
                 
             }
             
@@ -28418,14 +28484,6 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
                 displayPos:[48,14,55.075],
                 displayRot:[0,90,0],
                 displayScale:[1.2,1.2,1.2],
-             },{
-
-                name:'SupremeVortex',
-                slot:'sprinkler',
-                viewMatrix:[48+4,14+1.5,55.075,-MATH.HALF_PI,-0.3],
-                displayPos:[48,14,55.075],
-                displayRot:[0,90,1],
-                displayScale:[1.2,1.2,1.20],
             }],
             currentIndex:0,message:'Explore Sprinkler Shop'
         },
@@ -33669,13 +33727,6 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
         
         player.extraInfo=save.extraInfo
         player.honey=save.honey
-        console.log("SAVE LOADED, honey =", player.honey, "ENDGAME exists?", typeof ENDGAME);
-        // === ENDGAME CHECK (ON LOAD) ===
-    if (player.honey >= ENDGAME_HONEY && !ENDGAME.triggered) {
-    ENDGAME.triggered = true;
-    ENDGAME.checking = false;
-    console.log("END OF NORMALITY REACHED (on load)", player.honey);
-}
         player.pollen=save.pollen
         player.currentGear=save.currentGear
         for(let i in player.currentGear)if(i.indexOf('Snail')>-1){player.currentGear[i.replaceAll('Snail','Shell')]=player.currentGear[i].slice();delete player.currentGear[i]}
@@ -34707,12 +34758,4 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
         window.objects=objects
     }
     
-
 }
-
-
-
-
-
-
-
