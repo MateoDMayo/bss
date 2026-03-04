@@ -4651,20 +4651,20 @@ function BeeSwarmSimulator(DATA){
             svg:document.getElementById('inspire'),
             cooldown:document.getElementById('inspire_cooldown'),
             amount:document.getElementById('inspire_amount'),
-            maxCooldown:5,
-            maxAmount:50,
+            maxCooldown:20,
+            maxAmount:Infinity,
             tokenLife:4,
             
             update:(amount,player)=>{
                 
-                player.redPollen*=amount*0.25+1
-                player.whitePollen*=amount*0.25+1
-                player.bluePollen*=amount*0.25+1
+                player.redPollen*=amount*1+1
+                player.whitePollen*=amount*1+1
+                player.bluePollen*=amount*1+1
             },
             
             getMessage:(amount)=>{
                 
-                return 'Inspire\nx'+(amount*0.25+1).toFixed(2)+' pollen'
+                return 'Inspire\nx'+(amount*1+1).toFixed(2)+' pollen'
             }
         },
         
@@ -4678,7 +4678,7 @@ function BeeSwarmSimulator(DATA){
             cooldown:document.getElementById('rage_cooldown'),
             amount:document.getElementById('rage_amount'),
             maxCooldown:30,
-            maxAmount:3,
+            maxAmount:10,
             tokenLife:24,
             
             update:(amount,player)=>{
@@ -4792,7 +4792,7 @@ function BeeSwarmSimulator(DATA){
             amount:document.getElementById('pollenMark_amount'),
             maxCooldown:0,
             tokenLife:4,
-            maxAmount:3,
+            maxAmount:Infinity,
             
             update:(amount,player)=>{
                 
@@ -4816,7 +4816,7 @@ function BeeSwarmSimulator(DATA){
             amount:document.getElementById('honeyMark_amount'),
             maxCooldown:0,
             tokenLife:4,
-            maxAmount:3,
+            maxAmount:Infinity,
             
             update:(amount,player)=>{
 
@@ -4837,12 +4837,12 @@ function BeeSwarmSimulator(DATA){
             amount:document.getElementById('preciseMark_amount'),
             maxCooldown:0,
             tokenLife:4,
-            maxAmount:3,
+            maxAmount:Infinity,
             
             update:(amount,player)=>{
                 
-                player.criticalChance+=amount*0.07
-                player.superCritChance+=amount*0.07
+                player.criticalChance+=amount*0.1
+                player.superCritChance+=amount*0.1
             },
             
             getMessage:(amount)=>{
@@ -5473,14 +5473,14 @@ function BeeSwarmSimulator(DATA){
             
             update:(amount,player)=>{
                 
-                player.bluePollen*=Math.min(player.popStarSize*0.0125+2,5)
+                player.bluePollen*=Math.min(player.popStarSize*0.05+2,5)
                 player.instantBlueConversion=MATH.applyPercentage(player.instantBlueConversion,0.1)
                 player.bubblePollen*=1.25
             },
             
             getMessage:(amount)=>{
                 
-                return 'Pop Star Aura\nx'+Math.min(player.popStarSize*0.0125+2,5)+' blue pollen\n+10% instant blue conversion\nx1.25 bubble pollen'
+                return 'Pop Star Aura\nx'+Math.min(player.popStarSize*0.05+2,5)+' blue pollen\n+10% instant blue conversion\nx1.25 bubble pollen'
             }
         },
         
@@ -5494,9 +5494,9 @@ function BeeSwarmSimulator(DATA){
             
             update:(amount,player)=>{
                 
-                player.redPollen*=Math.min(player.scorchingStarSize*0.00025+2,5)
-                player.convertRate*=Math.min(player.scorchingStarSize*0.00025+2,5)
-                player.beeAttack*=Math.min(player.scorchingStarSize*0.00002+1,1.25)
+                player.redPollen*=Math.min(player.scorchingStarSize*0.005+2,5)
+                player.convertRate*=Math.min(player.scorchingStarSize*0.005+2,5)
+                player.beeAttack*=Math.min(player.scorchingStarSize*0.005+1,1.25)
                 player.instantRedConversion=MATH.applyPercentage(player.instantRedConversion,0.2)
             },
             
@@ -5516,14 +5516,14 @@ function BeeSwarmSimulator(DATA){
             
             update:(amount,player)=>{
                 
-                player.goo*=Math.min(player.gummyStarSize*0.0000000003+1,2)
-                player.whitePollen*=Math.min(player.gummyStarSize*0.0000000002+1,2)
+                player.goo*=Math.min(player.gummyStarSize*0.000005+1,2)
+                player.whitePollen*=Math.min(player.gummyStarSize*0.000005+1,2)
                 player.instantWhiteConversion=MATH.applyPercentage(player.instantWhiteConversion,0.2)
             },
             
             getMessage:(amount)=>{
                 
-                return 'Gummy Star Aura\nx'+Math.min(player.gummyStarSize*0.0000000003+1,2).toFixed(2)+' goo\nx'+Math.min(player.gummyStarSize*0.0000000002+1,2).toFixed(2)+' white pollen\n+20% instant white conversion'
+                return 'Gummy Star Aura\nx'+Math.min(player.gummyStarSize*0.0000003+1,2).toFixed(2)+' goo\nx'+Math.min(player.gummyStarSize*0.0000000002+1,2).toFixed(2)+' white pollen\n+20% instant white conversion'
             }
         },
         
@@ -5630,7 +5630,7 @@ function BeeSwarmSimulator(DATA){
             cooldown:document.getElementById('popStarPassive_cooldown'),
             amount:document.getElementById('popStarPassive_amount'),
             maxCooldown:60,
-            triggerVal:30,
+            triggerVal:15,
             triggerType:'blueBombTokens',
             currentVal:0,
             currentCooldown:0,
@@ -5654,7 +5654,7 @@ function BeeSwarmSimulator(DATA){
             cooldown:document.getElementById('scorchingStarPassive_cooldown'),
             amount:document.getElementById('scorchingStarPassive_amount'),
             maxCooldown:60,
-            triggerVal:15,
+            triggerVal:7,
             triggerType:'redBoostTokens',
             currentVal:0,
             currentCooldown:0,
@@ -5678,7 +5678,7 @@ function BeeSwarmSimulator(DATA){
             cooldown:document.getElementById('gummyStarPassive_cooldown'),
             amount:document.getElementById('gummyStarPassive_amount'),
             maxCooldown:60,
-            triggerVal:25,
+            triggerVal:14,
             triggerType:'gummyStar',
             currentVal:0,
             currentCooldown:0,
@@ -5751,7 +5751,7 @@ function BeeSwarmSimulator(DATA){
             cooldown:document.getElementById('starShowerPassive_cooldown'),
             amount:document.getElementById('starShowerPassive_amount'),
             maxCooldown:15,
-            triggerVal:25,
+            triggerVal:14,
             triggerType:'markOrBoostTokens',
             currentVal:0,
             currentCooldown:0,
@@ -5778,7 +5778,7 @@ function BeeSwarmSimulator(DATA){
             cooldown:document.getElementById('starSawPassive_cooldown'),
             amount:document.getElementById('starSawPassive_amount'),
             maxCooldown:40,
-            triggerVal:2,
+            triggerVal:1,
             triggerType:'stingerUsed',
             currentVal:0,
             currentCooldown:0,
@@ -6595,7 +6595,7 @@ function BeeSwarmSimulator(DATA){
             cooldown:document.getElementById('tabbyLove_cooldown'),
             amount:document.getElementById('tabbyLove_amount'),
             maxCooldown:Infinity,
-            maxAmount:250,
+            maxAmount:Infinity,
             tokenLife:16,
             
             update:(amount,player)=>{
