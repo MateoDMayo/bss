@@ -4591,9 +4591,9 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
             
             update:(amount,player)=>{
                 
-                player.redPollen*=amount*0.25+1
-                player.whitePollen*=amount*0.25+1
-                player.bluePollen*=amount*0.25+1
+                player.redPollen*=amount*1+1
+                player.whitePollen*=amount*1+1
+                player.bluePollen*=amount*1+1
             },
             
             getMessage:(amount)=>{
@@ -10284,13 +10284,13 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
         
         computeLevel(newLevel){
             
-            this.gatheringTokens=[{type:'inspire',cooldown:effects.inspire.trialCooldown,rate:effects.inspire.trialRate,timer:-10000,requireGifted:true}]
+            this.gatheringTokens=[{type:'inspire',cooldown:effects.inspire.trialCooldown,rate:effects.inspire.trialRate,timer:-100000,requireGifted:true}]
             
             for(let i in beeInfo[this.type].tokens){
                 
                 let t=beeInfo[this.type].tokens[i].replace('*',''),g=beeInfo[this.type].tokens[i].indexOf('*')>-1
                 
-                this.gatheringTokens.push({type:t,cooldown:effects[t].trialCooldown,rate:effects[t].trialRate,timer:-10000,requireGifted:g})
+                this.gatheringTokens.push({type:t,cooldown:effects[t].trialCooldown,rate:effects[t].trialRate,timer:-100000,requireGifted:g})
                 
             }
             
@@ -34709,6 +34709,7 @@ const ENDGAME_HONEY = 10_000_000_000_000; // 10T
     
 
 }
+
 
 
 
